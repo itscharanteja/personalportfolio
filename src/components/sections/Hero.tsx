@@ -18,7 +18,7 @@ export default function Hero() {
             Charan Sri Teja Burra
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            Full Stack Developer | UI/UX Enthusiast | Open Source Contributor
+            Full Stack Developer | Generative AI | Open Source Contributor
           </p>
           <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-12">
           I’m a passionate Full Stack Developer with expertise in React.js, React Native, Python, and Tailwind CSS. I have experience building dynamic web and mobile applications, including AI-powered projects. My work includes developing custom AI copilots, blog management systems, and Chrome extensions using the latest technologies.
