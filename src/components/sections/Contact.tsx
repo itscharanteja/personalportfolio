@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Github, Linkedin, Twitter } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -7,11 +8,38 @@ export default function Contact() {
     email: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    setLoading(true);
+    setError('');
+    setSuccess(false);
+
+    try {
+      const { error: supabaseError } = await supabase
+        .from('contact_messages')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            created_at: new Date().toISOString(),
+          },
+        ]);
+
+      if (supabaseError) throw supabaseError;
+
+      setSuccess(true);
+      setFormData({ name: '', email: '', message: '' });
+    } catch (err) {
+      console.error('Error sending message:', err);
+      setError('Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -35,7 +63,7 @@ export default function Contact() {
             </p>
             <div className="space-y-4">
               <a
-                href="mailto:your.email@example.com"
+                href="mailto:itscharanteja@gmail.com"
                 className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
               >
                 <Mail className="w-6 h-6 mr-3" />
@@ -71,6 +99,16 @@ export default function Contact() {
           </div>
           <div>
             <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <div className="rounded-md bg-red-50 dark:bg-red-900/50 p-4">
+                  <p className="text-sm text-red-700 dark:text-red-200">{error}</p>
+                </div>
+              )}
+              {success && (
+                <div className="rounded-md bg-green-50 dark:bg-green-900/50 p-4">
+                  <p className="text-sm text-green-700 dark:text-green-200">Message sent successfully!</p>
+                </div>
+              )}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Name
@@ -83,6 +121,7 @@ export default function Contact() {
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   required
+                  disabled={loading}
                 />
               </div>
               <div>
@@ -97,6 +136,7 @@ export default function Contact() {
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   required
+                  disabled={loading}
                 />
               </div>
               <div>
@@ -111,13 +151,15 @@ export default function Contact() {
                   rows={4}
                   className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   required
+                  disabled={loading}
                 ></textarea>
               </div>
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-6 rounded-md hover:opacity-90 transition-opacity duration-300"
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-6 rounded-md hover:opacity-90 transition-opacity duration-300 disabled:opacity-50"
               >
-                Send Message
+                {loading ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
