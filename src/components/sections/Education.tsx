@@ -1,5 +1,7 @@
 import React from 'react';
 import { GraduationCap } from 'lucide-react';
+import 'aos/dist/aos.css';
+import AOS from 'aos';
 
 const education = [
   {
@@ -19,10 +21,21 @@ const education = [
 ];
 
 export default function Education() {
+  React.useEffect(() => {
+    AOS.init({ duration: 800, once: true, offset: 100 });
+  }, []);
+
   return (
-    <section id="education" className="py-20 bg-gradient-to-b from-white dark:from-gray-900 to-blue-50 dark:to-gray-800">
+    <section
+      id="education"
+      className="py-20 bg-gradient-to-b from-white dark:from-gray-900 to-blue-50 dark:to-gray-800"
+      data-aos="fade-up"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <h2
+          className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          data-aos="fade-down"
+        >
           Education
         </h2>
         <div className="space-y-12">
@@ -30,16 +43,38 @@ export default function Education() {
             <div
               key={index}
               className="relative bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 transition-transform duration-300 hover:-translate-y-1"
+              data-aos="fade-up"
+              data-aos-delay={index * 120}
             >
-              <div className="absolute -left-3 top-8">
+              <div className="absolute -left-3 top-8" data-aos="zoom-in">
                 <GraduationCap className="w-6 h-6 text-blue-600" />
               </div>
               <div className="ml-6">
-                <h3 className="text-2xl font-semibold text-gray-800 dark:text-white">{edu.degree}</h3>
-                <p className="text-lg text-blue-600 dark:text-blue-400 mb-2">{edu.school}</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">{edu.period}</p>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">{edu.description}</p>
-                <div className="flex flex-wrap gap-2">
+                <h3
+                  className="text-2xl font-semibold text-gray-800 dark:text-white"
+                  data-aos="fade-right"
+                >
+                  {edu.degree}
+                </h3>
+                <p
+                  className="text-lg text-blue-600 dark:text-blue-400 mb-2"
+                  data-aos="fade-left"
+                >
+                  {edu.school}
+                </p>
+                <p
+                  className="text-gray-600 dark:text-gray-400 mb-4"
+                  data-aos="fade-up"
+                >
+                  {edu.period}
+                </p>
+                <p
+                  className="text-gray-700 dark:text-gray-300 mb-4"
+                  data-aos="fade-up"
+                >
+                  {edu.description}
+                </p>
+                <div className="flex flex-wrap gap-2" data-aos="fade-up">
                   {edu.courses.map((course, courseIndex) => (
                     <span
                       key={courseIndex}
