@@ -4,12 +4,11 @@ import ThemeToggle from './ThemeToggle';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 /**
- * Responsive, mobile-friendly, and natural-feeling Navbar.
- * - Hamburger menu for mobile.
- * - Larger touch targets.
- * - Smooth transitions.
- * - Sticky top for desktop, sticky bottom for mobile.
- * - Accessible.
+ * Navbar is now designed to be visually integrated ("mixed in") with the Hero/intro section.
+ * - No fixed or absolute positioning.
+ * - No background, shadow, or separation.
+ * - Renders as a natural part of the page flow, typically at the top of the Hero section.
+ * - Responsive and accessible.
  */
 
 interface NavItemProps {
@@ -60,61 +59,50 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   };
 
-  // Responsive: sticky top for desktop, sticky bottom for mobile
-  // Mobile: full-width, bottom bar, larger touch targets, icons+labels
   return (
     <>
-      {/* Desktop Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 shadow-sm bg-gradient-to-r from-slate-50/80 via-teal-50/80 to-indigo-50/80 dark:from-slate-900/80 dark:via-teal-900/80 dark:to-indigo-900/80 backdrop-blur-md
-        h-16 flex items-center
-        px-2
-        transition-all
-        md:static
-        md:h-16
-        md:px-0
-        md:block
-        "
-        style={{ display: 'flex', justifyContent: 'center' }}
+      {/* Integrated Navbar: no fixed/absolute, no background, no shadow */}
+      <nav
+        className="w-full flex items-center justify-between py-4 px-2 md:px-0 max-w-7xl mx-auto"
+        style={{ position: 'relative', background: 'none', boxShadow: 'none', zIndex: 1 }}
       >
-        <div className="max-w-7xl w-full flex items-center justify-between h-16 mx-auto px-2 sm:px-6 lg:px-8">
-          <div className="flex-shrink-0">
-            <button 
-              onClick={() => navigate('/')}
-              className="text-xl font-bold bg-gradient-to-r from-teal-500 via-indigo-400 to-purple-400 bg-clip-text text-transparent"
-              aria-label="Go to home"
-            >
-              Charan's Portfolio
-            </button>
-          </div>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2">
-            {navItems.map((item) => (
-              <NavItem
-                key={item.title}
-                href={item.href}
-                title={item.title}
-                onClick={() => handleNavigation(item.id)}
-              />
-            ))}
-            <ThemeToggle />
-          </div>
+        <div className="flex-shrink-0">
+          <button 
+            onClick={() => navigate('/')}
+            className="text-xl font-bold bg-gradient-to-r from-teal-500 via-indigo-400 to-purple-400 bg-clip-text text-transparent"
+            aria-label="Go to home"
+          >
+            Charan's Portfolio
+          </button>
+        </div>
+        
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-2">
+          {navItems.map((item) => (
+            <NavItem
+              key={item.title}
+              href={item.href}
+              title={item.title}
+              onClick={() => handleNavigation(item.id)}
+            />
+          ))}
+          <ThemeToggle />
+        </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
-            <ThemeToggle />
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md text-slate-700 dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
+        {/* Mobile menu button */}
+        <div className="md:hidden flex items-center space-x-2">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-md text-slate-700 dark:text-slate-200 hover:text-teal-700 dark:hover:text-teal-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
         </div>
       </nav>
 
-      {/* Mobile Navigation: sticky bottom bar, full width, large touch targets */}
+      {/* Mobile Navigation: overlay menu, not fixed to top/bottom */}
       <div className="md:hidden">
         {/* Slide-in menu for mobile */}
         <div
@@ -123,8 +111,8 @@ export default function Navbar() {
           aria-hidden="true"
         />
         <nav
-          className={`fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-r from-slate-50/95 via-teal-50/95 to-indigo-50/95 dark:from-slate-900/95 dark:via-teal-900/95 dark:to-indigo-900/95 shadow-t transition-transform duration-300
-            ${mobileMenuOpen ? 'translate-y-0' : 'translate-y-full'}
+          className={`fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-slate-50/95 via-teal-50/95 to-indigo-50/95 dark:from-slate-900/95 dark:via-teal-900/95 dark:to-indigo-900/95 shadow-t transition-transform duration-300
+            ${mobileMenuOpen ? 'translate-y-0' : '-translate-y-full'}
             flex flex-col
             md:hidden
           `}
