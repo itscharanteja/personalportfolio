@@ -41,11 +41,11 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" className="py-20 bg-gradient-to-b from-blue-50 dark:from-gray-800 to-white dark:to-gray-900">
+    <section id="projects" className="py-20 bg-gradient-to-b from-slate-50 via-teal-50 to-indigo-50 dark:from-slate-900 dark:via-teal-950 dark:to-indigo-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-extrabold text-center mb-16 bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent drop-shadow-lg tracking-tight">
+        <h2 className="text-4xl font-extrabold text-center mb-16 bg-gradient-to-r from-teal-500 via-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-lg tracking-tight">
           <span className="inline-flex items-center gap-2">
-            <Code2 className="inline-block text-blue-500 dark:text-blue-400" size={36} />
+            <Code2 className="inline-block text-teal-500 dark:text-teal-300" size={36} />
             Featured Projects
           </span>
         </h2>
@@ -55,11 +55,11 @@ export default function Projects() {
               key={index}
               data-aos="fade-up"
               data-aos-delay={index * 120}
-              className="relative group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-transparent hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 hover:scale-[1.03]"
+              className="relative group bg-white/80 dark:bg-slate-800/80 rounded-2xl overflow-hidden shadow-xl border border-transparent hover:border-teal-400 dark:hover:border-teal-500 transition-all duration-300 hover:scale-[1.03]"
             >
               {/* Featured badge */}
               {project.featured && (
-                <div className="absolute top-4 left-4 z-10 flex items-center gap-1 bg-gradient-to-r from-yellow-400 to-pink-400 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+                <div className="absolute top-4 left-4 z-10 flex items-center gap-1 bg-gradient-to-r from-teal-400 to-purple-300 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
                   <Star size={16} className="mr-1" />
                   Featured
                 </div>
@@ -72,18 +72,18 @@ export default function Projects() {
                 />
               </div>
               <div className="p-6 flex flex-col h-full">
-                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2 flex items-center gap-2">
+                <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-2 flex items-center gap-2">
                   {project.title}
-                  <BadgeCheck className="text-green-500" size={18} />
+                  <BadgeCheck className="text-teal-500" size={18} />
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+                <p className="text-slate-600 dark:text-slate-300 mb-4">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.technologies.map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium shadow-sm"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-full text-xs font-medium shadow-sm"
                     >
-                      <span className="w-1.5 h-1.5 bg-blue-500 dark:bg-blue-300 rounded-full" />
+                      <span className="w-1.5 h-1.5 bg-teal-400 dark:bg-teal-300 rounded-full" />
                       {tech}
                     </span>
                   ))}
@@ -93,7 +93,7 @@ export default function Projects() {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group/link"
+                    className="flex items-center text-slate-700 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-300 group/link"
                     title="View source code on GitHub"
                   >
                     <Github size={20} className="mr-1" />
@@ -103,7 +103,7 @@ export default function Projects() {
                     href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-300 group/link"
+                    className="flex items-center text-slate-700 dark:text-slate-200 hover:text-purple-500 dark:hover:text-purple-300 transition-colors duration-300 group/link"
                     title="View live demo"
                   >
                     <ExternalLink size={20} className="mr-1" />

@@ -28,12 +28,12 @@ export default function Education() {
   return (
     <section
       id="education"
-      className="py-20 bg-gradient-to-b from-white dark:from-gray-900 to-blue-50 dark:to-gray-800"
+      className="py-20 bg-gradient-to-b from-slate-50 via-teal-50 to-indigo-50 dark:from-slate-900 dark:via-teal-950 dark:to-indigo-950"
       data-aos="fade-up"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2
-          className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-teal-500 via-indigo-400 to-purple-400 bg-clip-text text-transparent"
           data-aos="fade-down"
         >
           Education
@@ -42,34 +42,34 @@ export default function Education() {
           {education.map((edu, index) => (
             <div
               key={index}
-              className="relative bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 transition-transform duration-300 hover:-translate-y-1"
+              className="relative bg-white/80 dark:bg-slate-800/80 rounded-lg shadow-lg p-8 transition-transform duration-300 hover:-translate-y-1"
               data-aos="fade-up"
               data-aos-delay={index * 120}
             >
               <div className="absolute -left-3 top-8" data-aos="zoom-in">
-                <GraduationCap className="w-6 h-6 text-blue-600" />
+                <GraduationCap className="w-6 h-6 text-teal-500" />
               </div>
               <div className="ml-6">
                 <h3
-                  className="text-2xl font-semibold text-gray-800 dark:text-white"
+                  className="text-2xl font-semibold text-slate-800 dark:text-slate-100"
                   data-aos="fade-right"
                 >
                   {edu.degree}
                 </h3>
                 <p
-                  className="text-lg text-blue-600 dark:text-blue-400 mb-2"
+                  className="text-lg text-teal-600 dark:text-teal-300 mb-2"
                   data-aos="fade-left"
                 >
                   {edu.school}
                 </p>
                 <p
-                  className="text-gray-600 dark:text-gray-400 mb-4"
+                  className="text-slate-600 dark:text-slate-400 mb-4"
                   data-aos="fade-up"
                 >
                   {edu.period}
                 </p>
                 <p
-                  className="text-gray-700 dark:text-gray-300 mb-4"
+                  className="text-slate-700 dark:text-slate-300 mb-4"
                   data-aos="fade-up"
                 >
                   {edu.description}
@@ -78,7 +78,7 @@ export default function Education() {
                   {edu.courses.map((course, courseIndex) => (
                     <span
                       key={courseIndex}
-                      className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm"
+                      className="px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-full text-sm"
                     >
                       {course}
                     </span>

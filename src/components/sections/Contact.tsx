@@ -50,21 +50,21 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-b from-blue-50 dark:from-gray-800 to-white dark:to-gray-900">
+    <section id="contact" className="py-20 bg-gradient-to-b from-slate-50 via-teal-50 to-indigo-50 dark:from-slate-900 dark:via-teal-950 dark:to-indigo-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-teal-500 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
           Get In Touch
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Contact Information</h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-8">
+            <h3 className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-100">Contact Information</h3>
+            <p className="text-slate-600 dark:text-slate-300 mb-8">
               I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
             </p>
             <div className="space-y-4">
               <a
                 href="mailto:itscharanteja@gmail.com"
-                className="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+                className="flex items-center text-slate-700 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-300"
               >
                 <Mail className="w-6 h-6 mr-3" />
                 itscharanteja@gmail.com
@@ -74,7 +74,7 @@ export default function Contact() {
                   href="https://github.com/itscharanteja"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-700 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-300"
                 >
                   <Github size={24} />
                 </a>
@@ -82,7 +82,7 @@ export default function Contact() {
                   href="https://www.linkedin.com/in/charan-sri-teja-burra-a386a5225/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-700 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-300"
                 >
                   <Linkedin size={24} />
                 </a>
@@ -90,7 +90,7 @@ export default function Contact() {
                   href="https://x.com/itscharanteja1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+                  className="text-slate-700 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-300"
                 >
                   <Twitter size={24} />
                 </a>
@@ -110,7 +110,7 @@ export default function Contact() {
                 </div>
               )}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                   Name
                 </label>
                 <input
@@ -119,14 +119,14 @@ export default function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:ring-teal-400 focus:border-teal-400 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                   required
                   disabled={loading}
                   autoComplete="off"
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                   Email
                 </label>
                 <input
@@ -135,14 +135,14 @@ export default function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:ring-teal-400 focus:border-teal-400 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                   required
                   disabled={loading}
                   autoComplete="off"
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label htmlFor="message" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                   Message
                 </label>
                 <textarea
@@ -151,7 +151,7 @@ export default function Contact() {
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:ring-teal-400 focus:border-teal-400 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                   required
                   disabled={loading}
                   autoComplete="off"
@@ -160,7 +160,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-6 rounded-md hover:opacity-90 transition-opacity duration-300 disabled:opacity-50"
+                className="w-full bg-gradient-to-r from-teal-400 via-indigo-400 to-purple-400 text-white py-2 px-6 rounded-md hover:opacity-90 transition-opacity duration-300 disabled:opacity-50"
               >
                 {loading ? 'Sending...' : 'Send Message'}
               </button>
