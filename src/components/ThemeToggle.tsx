@@ -2,12 +2,12 @@ import React, { useRef, useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { Sun, Moon } from 'lucide-react';
 
-// Utility to get the theme background color for the animation
+// No overlay, just a "background" circle effect behind the content
 function getThemeRevealBackground(isDarkMode: boolean) {
-  // Use a semi-transparent color for the reveal so the content is visible underneath
+  // Use a subtle, non-dimming, non-blurring gradient for the reveal
   return isDarkMode
-    ? 'radial-gradient(circle, rgba(248,250,252,0.7) 0%, rgba(224,242,254,0.6) 100%)'
-    : 'radial-gradient(circle, rgba(15,23,42,0.7) 0%, rgba(19,78,74,0.6) 100%)';
+    ? 'radial-gradient(circle, #f8fafc 0%, #e0f2fe 100%)'
+    : 'radial-gradient(circle, #0f172a 0%, #134e4a 100%)';
 }
 
 export default function ThemeToggle() {
@@ -40,7 +40,7 @@ export default function ThemeToggle() {
     const dy = Math.max(cy, vh - cy);
     const radius = Math.sqrt(dx * dx + dy * dy);
 
-    // Set up the reveal circle style with transparency and blur for interactivity
+    // Set up the reveal circle style: no blur, no opacity, pointerEvents none, zIndex -1 (behind content)
     setRevealStyle({
       position: 'fixed',
       left: cx,
@@ -49,11 +49,9 @@ export default function ThemeToggle() {
       height: 0,
       borderRadius: '50%',
       pointerEvents: 'none',
-      zIndex: 9999,
+      zIndex: -1, // BEHIND the content
       transform: 'translate(-50%, -50%)',
       background: getThemeRevealBackground(isDarkMode),
-      backdropFilter: 'blur(8px) saturate(1.2)',
-      WebkitBackdropFilter: 'blur(8px) saturate(1.2)',
       transition: `width ${DURATION}ms cubic-bezier(.4,0,.2,1), height ${DURATION}ms cubic-bezier(.4,0,.2,1), background ${DURATION}ms`
     });
 
