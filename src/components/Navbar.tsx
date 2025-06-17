@@ -1,7 +1,7 @@
-import React from 'react';
-import { Menu, X } from 'lucide-react';
-import ThemeToggle from './ThemeToggle';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React from "react";
+import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
+import { useNavigate, useLocation } from "react-router-dom";
 
 /**
  * Navbar is now designed to be visually integrated ("mixed in") with the Hero/intro section.
@@ -42,18 +42,18 @@ export default function Navbar() {
   const location = useLocation();
 
   const handleNavigation = (id: string) => {
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (location.pathname !== "/") {
+      navigate("/");
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }, 100);
     } else {
       const element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }
     setMobileMenuOpen(false);
@@ -64,18 +64,23 @@ export default function Navbar() {
       {/* Integrated Navbar: no fixed/absolute, no background, no shadow */}
       <nav
         className="w-full flex items-center justify-between py-4 px-2 md:px-0 max-w-7xl mx-auto"
-        style={{ position: 'relative', background: 'none', boxShadow: 'none', zIndex: 1 }}
+        style={{
+          position: "relative",
+          background: "none",
+          boxShadow: "none",
+          zIndex: 1,
+        }}
       >
         <div className="flex-shrink-0">
-          <button 
-            onClick={() => navigate('/')}
+          <button
+            onClick={() => navigate("/")}
             className="text-xl font-bold bg-gradient-to-r from-teal-500 via-indigo-400 to-purple-400 bg-clip-text text-transparent"
             aria-label="Go to home"
           >
             Charan's Portfolio
           </button>
         </div>
-        
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-2">
           {navItems.map((item) => (
@@ -106,17 +111,21 @@ export default function Navbar() {
       <div className="md:hidden">
         {/* Slide-in menu for mobile */}
         <div
-          className={`fixed inset-0 z-40 bg-black/30 transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+          className={`fixed inset-0 z-40 bg-black/30 transition-opacity duration-300 ${
+            mobileMenuOpen
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          }`}
           onClick={() => setMobileMenuOpen(false)}
           aria-hidden="true"
         />
         <nav
           className={`fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-slate-50/95 via-teal-50/95 to-indigo-50/95 dark:from-slate-900/95 dark:via-teal-900/95 dark:to-indigo-900/95 shadow-t transition-transform duration-300
-            ${mobileMenuOpen ? 'translate-y-0' : '-translate-y-full'}
+            ${mobileMenuOpen ? "translate-y-0" : "-translate-y-full"}
             flex flex-col
             md:hidden
           `}
-          style={{ minHeight: '56px' }}
+          style={{ minHeight: "56px" }}
           aria-label="Mobile navigation"
         >
           <div className="flex flex-col divide-y divide-slate-200 dark:divide-slate-800">
