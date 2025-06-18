@@ -19,8 +19,15 @@ interface NavItemProps {
 
 const navItems = [
   { href: "#home", title: "Home", id: "home" },
+  { href: "#about", title: "About", id: "about" },
+  { href: "#skills", title: "Skills", id: "skills" },
+  { href: "#services", title: "Services", id: "services" },
   { href: "#experience", title: "Experience", id: "experience" },
   { href: "#projects", title: "Projects", id: "projects" },
+  { href: "#side-projects", title: "Side Projects", id: "side-projects" },
+  { href: "#achievements", title: "Achievements", id: "achievements" },
+  { href: "#testimonials", title: "Testimonials", id: "testimonials" },
+  { href: "#blog", title: "Blog", id: "blog" },
   { href: "#education", title: "Education", id: "education" },
   { href: "#contact", title: "Contact", id: "contact" },
 ];
