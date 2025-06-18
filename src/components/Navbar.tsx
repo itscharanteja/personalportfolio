@@ -1,5 +1,5 @@
-import React from "react";
-import { Menu, X } from "lucide-react";
+import React, { useState } from "react";
+import { Menu, X, MoreHorizontal } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -17,13 +17,16 @@ interface NavItemProps {
   onClick: () => void;
 }
 
-const navItems = [
+const mainNavItems = [
   { href: "#home", title: "Home", id: "home" },
   { href: "#about", title: "About", id: "about" },
   { href: "#skills", title: "Skills", id: "skills" },
   { href: "#services", title: "Services", id: "services" },
   { href: "#experience", title: "Experience", id: "experience" },
   { href: "#projects", title: "Projects", id: "projects" },
+];
+
+const moreNavItems = [
   { href: "#side-projects", title: "Side Projects", id: "side-projects" },
   { href: "#achievements", title: "Achievements", id: "achievements" },
   { href: "#testimonials", title: "Testimonials", id: "testimonials" },
@@ -44,7 +47,8 @@ const NavItem = ({ href, title, onClick }: NavItemProps) => (
 );
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -64,6 +68,7 @@ export default function Navbar() {
       }
     }
     setMobileMenuOpen(false);
+    setMoreOpen(false);
   };
 
   return (
@@ -90,7 +95,7 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-2">
-          {navItems.map((item) => (
+          {mainNavItems.map((item) => (
             <NavItem
               key={item.title}
               href={item.href}
@@ -98,6 +103,40 @@ export default function Navbar() {
               onClick={() => handleNavigation(item.id)}
             />
           ))}
+          {/* More dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setMoreOpen((open) => !open)}
+              className="flex items-center px-4 py-2 text-base font-medium text-slate-700 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 rounded"
+              aria-haspopup="true"
+              aria-expanded={moreOpen}
+              aria-label="More"
+              type="button"
+            >
+              <MoreHorizontal className="mr-1" size={20} />
+              More
+            </button>
+            {moreOpen && (
+              <div
+                className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg py-2 z-50 border border-slate-100 dark:border-slate-700"
+                onMouseLeave={() => setMoreOpen(false)}
+                role="menu"
+                aria-label="More navigation"
+              >
+                {moreNavItems.map((item) => (
+                  <button
+                    key={item.title}
+                    onClick={() => handleNavigation(item.id)}
+                    className="block w-full text-left px-4 py-2 text-slate-700 dark:text-slate-200 hover:bg-teal-50 dark:hover:bg-teal-900 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-200 text-base"
+                    tabIndex={0}
+                    role="menuitem"
+                  >
+                    {item.title}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <ThemeToggle />
         </div>
 
@@ -136,7 +175,7 @@ export default function Navbar() {
           aria-label="Mobile navigation"
         >
           <div className="flex flex-col divide-y divide-slate-200 dark:divide-slate-800">
-            {navItems.map((item) => (
+            {mainNavItems.map((item) => (
               <button
                 key={item.title}
                 onClick={() => handleNavigation(item.id)}
@@ -147,6 +186,24 @@ export default function Navbar() {
                 {item.title}
               </button>
             ))}
+            {/* More section for mobile */}
+            <div className="flex flex-col">
+              <div className="flex items-center justify-center py-4 text-lg font-medium text-slate-700 dark:text-slate-200">
+                <MoreHorizontal className="mr-1" size={20} />
+                More
+              </div>
+              {moreNavItems.map((item) => (
+                <button
+                  key={item.title}
+                  onClick={() => handleNavigation(item.id)}
+                  className="flex items-center justify-center py-3 text-base text-slate-700 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400"
+                  tabIndex={mobileMenuOpen ? 0 : -1}
+                  aria-label={item.title}
+                >
+                  {item.title}
+                </button>
+              ))}
+            </div>
           </div>
         </nav>
       </div>
