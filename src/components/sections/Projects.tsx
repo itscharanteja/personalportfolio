@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { Github, ExternalLink, Star, BadgeCheck, Code2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Animation on scroll (AOS) library import
@@ -41,7 +41,7 @@ export default function Projects() {
   const [current, setCurrent] = React.useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     AOS.init({ duration: 800, once: true, offset: 100 });
   }, []);
 
@@ -55,7 +55,7 @@ export default function Projects() {
 
   const [slidesToShow, setSlidesToShow] = React.useState(getSlidesToShow());
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => setSlidesToShow(getSlidesToShow());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -63,13 +63,32 @@ export default function Projects() {
 
   const total = projects.length;
 
-  const goToPrev = () => {
+  const goToPrev = useCallback(() => {
     setCurrent((prev) => (prev - 1 + total) % total);
-  };
+  }, [total]);
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     setCurrent((prev) => (prev + 1) % total);
-  };
+  }, [total]);
+
+  // Keyboard navigation: left/right arrow keys
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Only trigger if slider is in viewport/focused
+      if (
+        document.activeElement === sliderRef.current ||
+        sliderRef.current?.contains(document.activeElement)
+      ) {
+        if (e.key === "ArrowLeft") {
+          goToPrev();
+        } else if (e.key === "ArrowRight") {
+          goToNext();
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [goToPrev, goToNext]);
 
   // Calculate which projects to show
   const getVisibleProjects = () => {
@@ -99,6 +118,7 @@ export default function Projects() {
             aria-label="Previous projects"
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 dark:bg-slate-800/80 rounded-full shadow-md p-2 hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors duration-200"
             style={{ display: total > slidesToShow ? 'block' : 'none' }}
+            tabIndex={0}
           >
             <ChevronLeft size={28} />
           </button>
@@ -107,13 +127,16 @@ export default function Projects() {
             aria-label="Next projects"
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 dark:bg-slate-800/80 rounded-full shadow-md p-2 hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors duration-200"
             style={{ display: total > slidesToShow ? 'block' : 'none' }}
+            tabIndex={0}
           >
             <ChevronRight size={28} />
           </button>
           {/* Slider List */}
           <div
             ref={sliderRef}
-            className="overflow-hidden"
+            className="overflow-hidden focus:outline-none"
+            tabIndex={0}
+            aria-label="Projects slider. Use left and right arrow keys to navigate."
           >
             <div
               className="flex transition-transform duration-500 ease-in-out"
@@ -200,6 +223,9 @@ export default function Projects() {
                 aria-label={`Go to project ${idx + 1}`}
               />
             ))}
+          </div>
+          <div className="mt-4 text-center text-sm text-slate-500 dark:text-slate-400">
+            Tip: You can use <kbd className="px-1 py-0.5 bg-slate-200 dark:bg-slate-700 rounded">←</kbd> and <kbd className="px-1 py-0.5 bg-slate-200 dark:bg-slate-700 rounded">→</kbd> arrow keys to navigate projects.
           </div>
         </div>
       </div>
