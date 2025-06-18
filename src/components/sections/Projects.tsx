@@ -35,25 +35,22 @@ const projects = [
   }
 ];
 
-const SLIDES_TO_SHOW = 1; // Show 1 project at a time on mobile, more on desktop via CSS
+// Responsive: show more slides on desktop
+function getSlidesToShow() {
+  if (typeof window === "undefined") return 1;
+  if (window.innerWidth >= 1024) return 3;
+  if (window.innerWidth >= 768) return 2;
+  return 1;
+}
 
 export default function Projects() {
   const [current, setCurrent] = React.useState(0);
+  const [slidesToShow, setSlidesToShow] = React.useState(getSlidesToShow());
   const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true, offset: 100 });
   }, []);
-
-  // Responsive: show more slides on desktop
-  const getSlidesToShow = () => {
-    if (typeof window === "undefined") return SLIDES_TO_SHOW;
-    if (window.innerWidth >= 1024) return 3;
-    if (window.innerWidth >= 768) return 2;
-    return 1;
-  };
-
-  const [slidesToShow, setSlidesToShow] = React.useState(getSlidesToShow());
 
   useEffect(() => {
     const handleResize = () => setSlidesToShow(getSlidesToShow());
@@ -64,17 +61,28 @@ export default function Projects() {
   const total = projects.length;
 
   const goToPrev = useCallback(() => {
-    setCurrent((prev) => (prev - 1 + total) % total);
-  }, [total]);
+    setCurrent((prev) => {
+      // If at the start, go to the last possible "page"
+      if (prev === 0) {
+        return Math.max(total - slidesToShow, 0);
+      }
+      return prev - 1;
+    });
+  }, [total, slidesToShow]);
 
   const goToNext = useCallback(() => {
-    setCurrent((prev) => (prev + 1) % total);
-  }, [total]);
+    setCurrent((prev) => {
+      // If at the last possible "page", go to start
+      if (prev >= total - slidesToShow) {
+        return 0;
+      }
+      return prev + 1;
+    });
+  }, [total, slidesToShow]);
 
   // Keyboard navigation: left/right arrow keys
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Only trigger if slider is in viewport/focused
       if (
         document.activeElement === sliderRef.current ||
         sliderRef.current?.contains(document.activeElement)
@@ -90,17 +98,18 @@ export default function Projects() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goToPrev, goToNext]);
 
-  // Calculate which projects to show
+  // Calculate which projects to show (windowed, not circular)
   const getVisibleProjects = () => {
+    // If all projects fit, show all
     if (slidesToShow >= total) return projects;
-    let visible = [];
-    for (let i = 0; i < slidesToShow; i++) {
-      visible.push(projects[(current + i) % total]);
-    }
-    return visible;
+    // Otherwise, show a window of slidesToShow projects starting from current
+    return projects.slice(current, current + slidesToShow);
   };
 
   const visibleProjects = getVisibleProjects();
+
+  // For dots, show as many as there are "pages"
+  const numPages = Math.max(total - slidesToShow + 1, 1);
 
   return (
     <section id="projects" className="py-20 bg-gradient-to-b from-slate-50 via-teal-50 to-indigo-50 dark:from-slate-900 dark:via-teal-950 dark:to-indigo-950">
@@ -141,11 +150,11 @@ export default function Projects() {
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{
-                width: `${visibleProjects.length * 100}%`,
-                transform: `translateX(0%)`
+                width: `${(slidesToShow) * 100}%`,
+                transform: `translateX(-${(current * (100 / slidesToShow))}%)`
               }}
             >
-              {visibleProjects.map((project, index) => (
+              {projects.map((project, index) => (
                 <div
                   key={index}
                   className="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-2"
@@ -215,12 +224,12 @@ export default function Projects() {
           </div>
           {/* Dots Indicator */}
           <div className="flex justify-center mt-6 space-x-2">
-            {Array.from({ length: total }).map((_, idx) => (
+            {Array.from({ length: numPages }).map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrent(idx)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${current === idx ? 'bg-teal-500' : 'bg-slate-300 dark:bg-slate-700'}`}
-                aria-label={`Go to project ${idx + 1}`}
+                aria-label={`Go to project set ${idx + 1}`}
               />
             ))}
           </div>
