@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail } from 'lucide-react';
 import profileImage from '../../assets/images/profile.png';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
@@ -43,6 +43,24 @@ const gradientBgVariants = {
   },
 };
 
+// Preload the profile image before rendering the <img>
+function usePreloadImage(src: string) {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = src;
+    if (img.complete) {
+      setLoaded(true);
+    } else {
+      img.onload = () => setLoaded(true);
+      img.onerror = () => setLoaded(true); // fallback: show anyway
+    }
+  }, [src]);
+
+  return loaded;
+}
+
 export default function Hero() {
   // Intersection observer for scroll-triggered animation
   const controls = useAnimation();
@@ -54,6 +72,9 @@ export default function Hero() {
 
   // Prefers-reduced-motion support
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Preload profile image
+  const imageLoaded = usePreloadImage(profileImage);
 
   return (
     <section
@@ -85,15 +106,25 @@ export default function Hero() {
             data-aos="zoom-in"
             variants={textVariants}
           >
-            <motion.img
-              src={profileImage}
-              alt="Profile"
-              className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-full mx-auto mb-8 border-4 border-white dark:border-slate-800 shadow-lg object-cover"
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 1, opacity: 1, transition: { delay: 0.1, type: 'spring', stiffness: 90 } }}
-              whileHover={prefersReducedMotion ? {} : { scale: 1.04, rotate: 2 }}
-              whileTap={prefersReducedMotion ? {} : { scale: 0.98, rotate: -2 }}
-            />
+            {!imageLoaded ? (
+              <div
+                className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-full mx-auto mb-8 border-4 border-white dark:border-slate-800 shadow-lg bg-gradient-to-br from-slate-200 via-slate-100 to-slate-300 dark:from-slate-700 dark:via-slate-800 dark:to-slate-900 animate-pulse"
+                aria-label="Loading profile"
+              />
+            ) : (
+              <motion.img
+                src={profileImage}
+                alt="Profile"
+                className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-full mx-auto mb-8 border-4 border-white dark:border-slate-800 shadow-lg object-cover"
+                initial={{ scale: 0.85, opacity: 0 }}
+                animate={prefersReducedMotion ? { scale: 1, opacity: 1 } : { scale: 1, opacity: 1, transition: { delay: 0.1, type: 'spring', stiffness: 90 } }}
+                whileHover={prefersReducedMotion ? {} : { scale: 1.04, rotate: 2 }}
+                whileTap={prefersReducedMotion ? {} : { scale: 0.98, rotate: -2 }}
+                loading="eager"
+                fetchpriority="high"
+                draggable={false}
+              />
+            )}
           </motion.div>
           <motion.h1
             className="text-5xl font-bold mb-4 bg-gradient-to-r from-teal-500 via-indigo-400 to-purple-400 bg-clip-text text-transparent"
