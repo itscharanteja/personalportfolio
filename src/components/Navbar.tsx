@@ -81,7 +81,7 @@ export default function Navbar() {
         <div className="flex-shrink-0">
           <button
             onClick={() => navigate("/")}
-            className="text-xl font-bold bg-gradient-to-r from-teal-500 via-indigo-400 to-purple-400 bg-clip-text text-transparent"
+            className="pl-0 text-xl font-bold bg-gradient-to-r from-teal-500 via-indigo-400 to-purple-400 bg-clip-text text-transparent"
             aria-label="Go to home"
           >
             Charan's Portfolio
